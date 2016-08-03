@@ -90,4 +90,4 @@ Do not use this alone, as nothing client-side can't be spoofed by the user. Plea
 
 ## License
 
-I don't give a shit how you use it, just please keep the first 4 lines (with my credits) intact. You are free to modify to your needs as long as those stay intact as well.
+I don't give a shit how you use it, just please keep the first 5 lines (with my credits) intact. You are free to modify to your needs as long as those stay intact as well.
