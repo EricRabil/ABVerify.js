@@ -7,7 +7,6 @@
 
 $.fn.ABVerify = function() {
     $(this).submit(function(e) {
-        e.preventDefault();
         var form = $(this);
         var failedElements = [];
         form.find("span.abverify-fail-text").remove();
@@ -63,7 +62,10 @@ $.fn.ABVerify = function() {
                 $(this).append("<span class=\"abverify-fail-text\">" + message + "</span>");
             }
         });
-        if (failedElements.length > 0) { e.preventDefault(); }
+        if (failedElements.length > 0) {
+            e.preventDefault();
+            $(document).scrollTop($(failedElements[0]).offset().top - 50);
+        }
     });
     
     function getMessage(element, failedChecks) {
