@@ -5,7 +5,7 @@ An extensive jQuery form verification plugin. Verify that forms have the correct
 
 ## Installing
 
-1. Add the ABVerify.js file to a directory on your server
+1. Add the [ABVerify.js file](https://github.com/AppleBetas/ABVerify.js/raw/master/ABVerify.js) to a directory on your server
 2. Add a `<script>` tag leading to the script
 
 ## Usage
