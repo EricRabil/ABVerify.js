@@ -3,6 +3,15 @@ An extensive jQuery form verification plugin. Verify that forms have the correct
 
 **Dependencies:** jQuery
 
+## Features
+
+- Easy to use
+- Only one line of JavaScript required
+- Use of HTML attributes
+- Huge selection of value checks
+- Scroll to first incorrect field
+- Custom CSS for incorrect fields
+
 ## Installing
 
 1. Add the [ABVerify.js file](https://github.com/AppleBetas/ABVerify.js/raw/master/ABVerify.js) to a directory on your server
