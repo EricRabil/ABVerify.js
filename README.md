@@ -63,6 +63,8 @@ For example, if I wanted to make a field that accepts a number, but it must be b
 
 Now the form won't submit until that number is between 5 and 10.
 
+*Note:* You can also make radio buttons required! Wrap them in a div, and give that element the `data-abverify-required` attribute.
+
 #### Custom verification messages
 
 ABVerify will try and give your fields an appropriate message when it fails verification, but you can also add your own verification messages. Simply put the check name, with a suffix of `-message` and we will use that instead. In addition, if you want the form field to only have one message for all fails, instead of one message for each check failed, just use `data-abverify-message`.
