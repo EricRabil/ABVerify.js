@@ -7,6 +7,7 @@
 
 $.fn.ABVerify = function() {
     $(this).submit(function(e) {
+        e.preventDefault();
         var form = $(this);
         var failedElements = [];
         form.find("span.abverify-fail-text").remove();
@@ -14,16 +15,10 @@ $.fn.ABVerify = function() {
             $(this).removeClass("abverify-failed");
             var dataAttributes = this.dataset;
             var abDataAttributes = {};
-            var abMessages = {};
-            var messageOverride = null;
             $.each(dataAttributes, function(i, item) {
-                if(i == "abverifyMessage") {
-                    messageOverride = item;
-                } else {
+                if(i != "abverifyMessage") {
                     if(i.startsWith("abverify")) {
-                        if(i.endsWith("Message")) {
-                            abMessages[cleanseName(i)] = item;
-                        } else {
+                        if(!i.endsWith("Message")) {
                             abDataAttributes[cleanseName(i)] = item;
                         }
                     }
@@ -38,20 +33,7 @@ $.fn.ABVerify = function() {
                     }
                 });
                 if(count(failedChecks) > 0) {
-                    var message = "";
-                    if(messageOverride != null) {
-                        message = messageOverride;
-                    } else {
-                        var messages = [];
-                        $.each(failedChecks, function(i, item) {
-                            if (i in abMessages) {
-                                messages.push(properize(abMessages[i]));
-                            } else {
-                                messages.push(getFailMessage(i, item));
-                            }
-                        });
-                        message = messages.join(" ");
-                    }
+                    var message = getMessage(this, failedChecks);                    
                     failedElements.push(this);
                     $(this).addClass("abverify-failed");
                     $(this).after("<span class=\"abverify-fail-text\">" + message + "</span>");
@@ -59,9 +41,62 @@ $.fn.ABVerify = function() {
             }
         }).on("keydown paste keyup textchanged", function() {
             $(this).removeClass("abverify-failed");
-        })
+            if($(this).next().is("span.abverify-fail-text")) {
+                $(this).next().remove();
+            }
+        });
+        form.find("div[data-abverify-required=true]").each(function() {
+            var group = $(this);
+            var valid = false;
+            $(this).children("input[type=radio]").each(function() {
+                if($(this).is(":checked")) {
+                    valid = true;
+                }
+            }).click(function() {
+                group.removeClass("abverify-failed");
+                group.find("span.abverify-fail-text").remove();
+            });
+            if(!valid) {
+                failedElements.push(this);
+                $(this).addClass("abverify-failed");
+                var message = getMessage(this, {abRequired: true});
+                $(this).append("<span class=\"abverify-fail-text\">" + message + "</span>");
+            }
+        });
         if (failedElements.length > 0) { e.preventDefault(); }
     });
+    
+    function getMessage(element, failedChecks) {
+        var dataAttributes = element.dataset;
+        var abMessages = {};
+        var messageOverride = null;
+        $.each(dataAttributes, function(i, item) {
+            if(i == "abverifyMessage") {
+                messageOverride = item;
+            } else {
+                if(i.startsWith("abverify")) {
+                    if(i.endsWith("Message")) {
+                        abMessages[cleanseName(i)] = item;
+                    }
+                }
+            }
+        });
+        var message = "";
+        if(messageOverride != null) {
+            message = messageOverride;
+        } else {
+            var messages = [];
+            $.each(failedChecks, function(i, item) {
+                if (i in abMessages) {
+                    messages.push(properize(abMessages[i]));
+                } else {
+                    messages.push(getFailMessage(i, item));
+                }
+            });
+            message = messages.join(" ");
+        }
+        return message;
+    }
     
     function performCheck(name, argument, value) {
         if(name == "Required") {
