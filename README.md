@@ -55,8 +55,6 @@ If the value is not a number, all of these will fail.
 - `is-url` - requires the value either be a URL or not (accepts boolean - whether it must be a URL or not)
 - `is-number` - requires the value either be a number or not (accepts boolean - whether it must be a number or not)
 
-You can't use the text-specific and number-specific types together, or it will fail.
-
 These attributes go on your `<input>` or `<textarea>` elements with the prefix `data-abverify-`
 
 For example, if I wanted to make a field that accepts a number, but it must be between 5 and 10, I would do the following:
