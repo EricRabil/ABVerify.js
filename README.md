@@ -18,7 +18,7 @@ This will initialize ABVerify on that form element. Now whenever the form is sub
 
 ### Setting the requirements
 
-How does ABVerify know what your form requirements are? Easy, it uses attributes on the HTML elements of your form. We chose these because they can be easily changed with JavaScript and allow you to build forms and visualize them in the easiest way.
+How does ABVerify know what your form requirements are? Easy, it uses data attributes on the HTML elements of your form. We chose these because they can be easily changed with JavaScript and allow you to build forms and visualize them in the easiest way.
 
 These are the available requirement types:
 
@@ -57,22 +57,22 @@ If the value is not a number, all of these will fail.
 
 You can't use the text-specific and number-specific types together, or it will fail.
 
-These attributes go on your `<input>` or `<textarea>` elements with the prefix `abverify-`
+These attributes go on your `<input>` or `<textarea>` elements with the prefix `data-abverify-`
 
 For example, if I wanted to make a field that accepts a number, but it must be between 5 and 10, I would do the following:
 
-    <input type="number" abverify-num-greater-than="5" abverify-num-less-than="10" />
+    <input type="number" data-abverify-num-greater-than="5" data-abverify-num-less-than="10" />
 
 Now the form won't submit until that number is between 5 and 10.
 
 #### Custom verification messages
 
-ABVerify will try and give your fields an appropriate message when it fails verification, but you can also add your own verification messages. Simply put the check name, with a suffix of `-message` and we will use that instead. In addition, if you want the form field to only have one message for all fails, instead of one message for each check failed, just use `abverify-message`.
+ABVerify will try and give your fields an appropriate message when it fails verification, but you can also add your own verification messages. Simply put the check name, with a suffix of `-message` and we will use that instead. In addition, if you want the form field to only have one message for all fails, instead of one message for each check failed, just use `data-abverify-message`.
 
 **Examples:**
 
-    <input type="number" abverify-num-greater-than="5" abverify-num-less-than="10" abverify-message="Your number must be between 5 and 10." />
-    <input type="text" abverify-text-starts-with="John" abverify-text-doesnt-end-with="Smith" abverify-text-starts-with-message="Your name must start with 'John'" abverify-text-doesnt-end-with-message="Your name mustn't end with 'Smith'" />
+    <input type="number" data-abverify-num-greater-than="5" data-abverify-num-less-than="10" data-abverify-message="Your number must be between 5 and 10." />
+    <input type="text" data-abverify-text-starts-with="John" data-abverify-text-doesnt-end-with="Smith" data-abverify-text-starts-with-message="Your name must start with 'John'" data-abverify-text-doesnt-end-with-message="Your name mustn't end with 'Smith'" />
 
 ### Styling
 
