@@ -14,11 +14,11 @@ On any `<form>` element in your HTML, use the jQuery method `.ABVerify()` on it,
 
     $("form#myform").ABVerify();
 
-This will initialize ABVerify.js on that form element. Now whenever the form is submitted ABVerify will cancel the form if it doesn't meet the requirements.
+This will initialize ABVerify on that form element. Now whenever the form is submitted ABVerify will cancel the form if it doesn't meet the requirements.
 
 ### Setting the requirements
 
-How does ABVerify.js know what your form requirements are? Easy, it uses attributes on the HTML elements of your form. We chose these because they can be easily changed with JavaScript and allow you to build forms and visualize them in the easiest way.
+How does ABVerify know what your form requirements are? Easy, it uses attributes on the HTML elements of your form. We chose these because they can be easily changed with JavaScript and allow you to build forms and visualize them in the easiest way.
 
 These are the available requirement types:
 
@@ -67,9 +67,9 @@ Now the form won't submit until that number is between 5 and 10.
 
 #### Custom verification messages
 
-ABVerify.js will try and give your fields an appropriate message when it fails verification, but you can also add your own verification messages. Simply put the check name, with a suffix of `-message` and we will use that instead. In addition, if you want the form field to only have one message for all fails, instead of one message for each check failed, just use `abverify-message`.
+ABVerify will try and give your fields an appropriate message when it fails verification, but you can also add your own verification messages. Simply put the check name, with a suffix of `-message` and we will use that instead. In addition, if you want the form field to only have one message for all fails, instead of one message for each check failed, just use `abverify-message`.
 
-Examples:
+**Examples:**
 
     <input type="number" abverify-num-greater-than="5" abverify-num-less-than="10" abverify-message="Your number must be between 5 and 10." />
     <input type="text" abverify-text-starts-with="John" abverify-text-doesnt-end-with="Smith" abverify-text-starts-with-message="Your name must start with 'John'" abverify-text-doesnt-end-with-message="Your name mustn't end with 'Smith'" />
