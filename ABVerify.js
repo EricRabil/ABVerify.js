@@ -10,56 +10,57 @@ $.fn.ABVerify = function() {
         var form = $(this);
         var failedElements = [];
         form.find("span.abverify-fail-text").remove();
-        form.find("input[type=number], input[type=password], input[type=text], input[type=search], input[type=tel], input[type=url], input[type=email], textarea").each(function() {
+        form.find("input[type=number], input[type=password], input[type=text], input[type=search], input[type=tel], input[type=url], input[type=email], textarea, div[data-abverify-required=true]").each(function() {
             $(this).removeClass("abverify-failed");
-            var dataAttributes = this.dataset;
-            var abDataAttributes = {};
-            $.each(dataAttributes, function(i, item) {
-                if(i != "abverifyMessage") {
-                    if(i.startsWith("abverify")) {
-                        if(!i.endsWith("Message")) {
-                            abDataAttributes[cleanseName(i)] = item;
+            if(!$(this).is("div[data-abverify-required=true]")) {
+                var dataAttributes = this.dataset;
+                var abDataAttributes = {};
+                $.each(dataAttributes, function(i, item) {
+                    if(i != "abverifyMessage") {
+                        if(i.startsWith("abverify")) {
+                            if(!i.endsWith("Message")) {
+                                abDataAttributes[cleanseName(i)] = item;
+                            }
                         }
                     }
-                }
-            });
-            if(count(abDataAttributes) > 0) {
-                var failedChecks = {};
-                var input = $(this);
-                $.each(abDataAttributes, function(i, item) {
-                    if(!performCheck(i, item, input.val())) {
-                        failedChecks[i] = item;
-                    }
                 });
-                if(count(failedChecks) > 0) {
-                    var message = getMessage(this, failedChecks);                    
+                if(count(abDataAttributes) > 0) {
+                    var failedChecks = {};
+                    var input = $(this);
+                    $.each(abDataAttributes, function(i, item) {
+                        if(!performCheck(i, item, input.val())) {
+                            failedChecks[i] = item;
+                        }
+                    });
+                    if(count(failedChecks) > 0) {
+                        var message = getMessage(this, failedChecks);                    
+                        failedElements.push(this);
+                        $(this).addClass("abverify-failed");
+                        $(this).after("<span class=\"abverify-fail-text\">" + message + "</span>");
+                    }
+                }
+            } else {
+                var group = $(this);
+                var valid = false;
+                $(this).children("input[type=radio]").each(function() {
+                    if($(this).is(":checked")) {
+                        valid = true;
+                    }
+                }).click(function() {
+                    group.removeClass("abverify-failed");
+                    group.find("span.abverify-fail-text").remove();
+                });
+                if(!valid) {
                     failedElements.push(this);
                     $(this).addClass("abverify-failed");
-                    $(this).after("<span class=\"abverify-fail-text\">" + message + "</span>");
+                    var message = getMessage(this, {Required: true});
+                    $(this).append("<span class=\"abverify-fail-text\">" + message + "</span>");
                 }
             }
         }).on("keydown paste keyup textchanged", function() {
             $(this).removeClass("abverify-failed");
             if($(this).next().is("span.abverify-fail-text")) {
                 $(this).next().remove();
-            }
-        });
-        form.find("div[data-abverify-required=true]").each(function() {
-            var group = $(this);
-            var valid = false;
-            $(this).children("input[type=radio]").each(function() {
-                if($(this).is(":checked")) {
-                    valid = true;
-                }
-            }).click(function() {
-                group.removeClass("abverify-failed");
-                group.find("span.abverify-fail-text").remove();
-            });
-            if(!valid) {
-                failedElements.push(this);
-                $(this).addClass("abverify-failed");
-                var message = getMessage(this, {abRequired: true});
-                $(this).append("<span class=\"abverify-fail-text\">" + message + "</span>");
             }
         });
         if (failedElements.length > 0) {
