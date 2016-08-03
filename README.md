@@ -24,7 +24,7 @@ These are the available requirement types:
 
 #### Main types:
 
-- `required` - requires a value to be entered (accepts boolean - whether it is required or not)
+- `required` - requires a value to be entered (accepts boolean - whether it is required or must be left blank)
 - `max-length` - specify a length that the form must be under (accepts whole numbers)
 - `min-length` - specify a length that the form must be under (accepts whole numbers)
 - `equal-to` - requires the value of the input be equal to an object (accepts any string)
