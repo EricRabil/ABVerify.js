@@ -1,3 +1,5 @@
+**ABVerify.js is deprecated and will no longer be updated.**
+
 # ABVerify.js
 An extensive jQuery form verification plugin. Verify that forms have the correct data in them before allowing them to submit
 
